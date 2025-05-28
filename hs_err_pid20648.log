@@ -1,0 +1,247 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (malloc) failed to allocate 1048576 bytes. Error detail: AllocateHeap
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   This process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (allocation.cpp:44), pid=20648, tid=21260
+#
+# JRE version:  (21.0.6+9) (build )
+# Java VM: OpenJDK 64-Bit Server VM (21.0.6+9-b895.109, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Djava.io.tmpdir=C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\tmp\statistics-uploader com.intellij.internal.statistic.uploader.EventLogUploader --ide-token C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\token --recorders MTHC --device-mthc 1005251c7a95f40-eaf9-4680-a591-2d685ce92a5a --bucket-mthc 51 --machine-mthc 197bb1bd1a045115993e1a424775ae0bcf3d58747faf70132fb8ea29db69bea6 --id-revision-mthc 0 --files-mthc C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\event-log-data\logs\MTHC\e62c-48f2-8b20-94fdab9bb40e-251.25410.129-release.log --escape-mthc false --url https://resources.jetbrains.com/storage/fus/config/v4/%s/%s.json --product IU --product-version 2025.1.1.1 --baseline-version 251 --user-agent IntelliJ IDEA/251.25410.129 --extra-headers 
+
+Host: AMD Ryzen 5 3500U with Radeon Vega Mobile Gfx  , 8 cores, 5G,  Windows 11 , 64 bit Build 26100 (10.0.26100.3775)
+Time: Sun May 11 17:09:03 2025 Paris, Madrid (heure duild 26100 (10.0.26100.3775) elapsed time: 1.045720 seconds (0d 0h 0m 1s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x0000017af81c7180):  JavaThread "Unknown thread" [_thread_in_vm, id=21260, stack(0x0000003ec0100000,0x0000003ec0200000) (1024K)]
+
+Stack: [0x0000003ec0100000,0x0000003ec0200000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x6e5cb9]
+V  [jvm.dll+0x8c4113]
+V  [jvm.dll+0x8c666e]
+V  [jvm.dll+0x8c6d53]
+V  [jvm.dll+0x288f76]
+V  [jvm.dll+0xc0e57]
+V  [jvm.dll+0x33e405]
+V  [jvm.dll+0x3369f1]
+V  [jvm.dll+0x88b569]
+V  [jvm.dll+0x3ca6c8]
+V  [jvm.dll+0x8745b8]
+V  [jvm.dll+0x45f0de]
+V  [jvm.dll+0x460dc1]
+C  [jli.dll+0x52ab]
+C  [ucrtbase.dll+0x37b0]
+C  [KERNEL32.DLL+0x2e8d7]
+C  [ntdll.dll+0xb14fc]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ffa2ed4a148, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+Total: 0
+
+Other Threads:
+  0x0000017af819f230 WorkerThread "GC Thread#0"                     [id=21416, stack(0x0000003ec0200000,0x0000003ec0300000) (1024K)]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ffa2e432ff0]
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x00007ffa2edbeb30] Heap_lock - owner thread: 0x0000017af81c7180
+
+Heap address: 0x00000000a1e00000, size: 1506 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+ CardTable entry size: 512
+ Card Set container configuration: InlinePtr #cards 5 size 8 Array Of Cards #cards 12 size 40 Howl #buckets 4 coarsen threshold 1843 Howl Bitmap #cards 512 size 80 coarsen threshold 460 Card regions per heap region 1 cards per card region 2048
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000a1e00000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+ Metaspace       used 0K, committed 0K, reserved 0K
+  class space    used 0K, committed 0K, reserved 0K
+
+Heap Regions: E=young(eden), S=young(survivor), O=old, HS=humongous(starts), HC=humongous(continues), CS=collection set, F=free, TAMS=top-at-mark-start, PB=parsable bottom
+
+Card table byte_map: [0x0000017afec50000,0x0000017afef50000] _byte_map_base: 0x0000017afe741000
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.028 Loaded shared library C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes loaded (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+ZGC Phase Switch (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Memory protections (0 events):
+No events
+
+Nmethod flushes (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff7581a0000 - 0x00007ff7581aa000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\java.exe
+0x00007ffa9b700000 - 0x00007ffa9b960000 	C:\WINDOWS\SYSTEM32\ntdll.dll
+0x00007ffa9a300000 - 0x00007ffa9a3c7000 	C:\WINDOWS\System32\KERNEL32.DLL
+0x00007ffa98f00000 - 0x00007ffa992ca000 	C:\WINDOWS\System32\KERNELBASE.dll
+0x00007ffa98db0000 - 0x00007ffa98efb000 	C:\WINDOWS\System32\ucrtbase.dll
+0x00007ffa93910000 - 0x00007ffa9392b000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\VCRUNTIME140.dll
+0x00007ffa6c8f0000 - 0x00007ffa6c908000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\jli.dll
+0x00007ffa99ca0000 - 0x00007ffa99e6c000 	C:\WINDOWS\System32\USER32.dll
+0x00007ffa98ad0000 - 0x00007ffa98af7000 	C:\WINDOWS\System32\win32u.dll
+0x00007ffa9aba0000 - 0x00007ffa9abca000 	C:\WINDOWS\System32\GDI32.dll
+0x00007ffa88760000 - 0x00007ffa889f7000 	C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.3624_none_3e086962e3345f24\COMCTL32.dll
+0x00007ffa98990000 - 0x00007ffa98ac1000 	C:\WINDOWS\System32\gdi32full.dll
+0x00007ffa99bf0000 - 0x00007ffa99c99000 	C:\WINDOWS\System32\msvcrt.dll
+0x00007ffa988e0000 - 0x00007ffa98983000 	C:\WINDOWS\System32\msvcp_win.dll
+0x00007ffa99800000 - 0x00007ffa9982f000 	C:\WINDOWS\System32\IMM32.DLL
+0x00007ffa938d0000 - 0x00007ffa938dc000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\vcruntime140_1.dll
+0x00007ffa2e060000 - 0x00007ffa2e0ed000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\msvcp140.dll
+0x00007ffa2e0f0000 - 0x00007ffa2eeb1000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\server\jvm.dll
+0x00007ffa99950000 - 0x00007ffa99a02000 	C:\WINDOWS\System32\ADVAPI32.dll
+0x00007ffa995c0000 - 0x00007ffa99666000 	C:\WINDOWS\System32\sechost.dll
+0x00007ffa9a3d0000 - 0x00007ffa9a4e6000 	C:\WINDOWS\System32\RPCRT4.dll
+0x00007ffa99b70000 - 0x00007ffa99be4000 	C:\WINDOWS\System32\WS2_32.dll
+0x00007ffa90cf0000 - 0x00007ffa90d26000 	C:\WINDOWS\SYSTEM32\WINMM.dll
+0x00007ffa92a70000 - 0x00007ffa92a7b000 	C:\WINDOWS\SYSTEM32\VERSION.dll
+0x00007ffa98750000 - 0x00007ffa987ae000 	C:\WINDOWS\SYSTEM32\POWRPROF.dll
+0x00007ffa98730000 - 0x00007ffa98744000 	C:\WINDOWS\SYSTEM32\UMPDC.dll
+0x00007ffa976f0000 - 0x00007ffa9770a000 	C:\WINDOWS\SYSTEM32\kernel.appcore.dll
+0x00007ffa938c0000 - 0x00007ffa938ca000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\jimage.dll
+0x00007ffa962b0000 - 0x00007ffa964f1000 	C:\WINDOWS\SYSTEM32\DBGHELP.DLL
+0x00007ffa9a6a0000 - 0x00007ffa9aa22000 	C:\WINDOWS\System32\combase.dll
+0x00007ffa9abe0000 - 0x00007ffa9acb6000 	C:\WINDOWS\System32\OLEAUT32.dll
+0x00007ffa81f30000 - 0x00007ffa81f69000 	C:\WINDOWS\SYSTEM32\dbgcore.DLL
+0x00007ffa98c80000 - 0x00007ffa98d19000 	C:\WINDOWS\System32\bcryptPrimitives.dll
+0x00007ffa93650000 - 0x00007ffa93670000 	C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\java.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin;C:\WINDOWS\SYSTEM32;C:\WINDOWS\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.26100.3624_none_3e086962e3345f24;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\jbr\bin\server
+
+VM Arguments:
+jvm_args: -Djava.io.tmpdir=C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\tmp\statistics-uploader 
+java_command: com.intellij.internal.statistic.uploader.EventLogUploader --ide-token C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\token --recorders MTHC --device-mthc 1005251c7a95f40-eaf9-4680-a591-2d685ce92a5a --bucket-mthc 51 --machine-mthc 197bb1bd1a045115993e1a424775ae0bcf3d58747faf70132fb8ea29db69bea6 --id-revision-mthc 0 --files-mthc C:\Users\lahou\AppData\Local\JetBrains\IntelliJIdea2025.1\event-log-data\logs\MTHC\e62c-48f2-8b20-94fdab9bb40e-251.25410.129-release.log --escape-mthc false --url https://resources.jetbrains.com/storage/fus/config/v4/%s/%s.json --product IU --product-version 2025.1.1.1 --baseline-version 251 --user-agent IntelliJ IDEA/251.25410.129 --extra-headers 
+java_class_path (initial): C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\lib\util-8.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\lib\annotations.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\lib\lib-client.jar;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\lib\stats.jar
+Launcher Type: SUN_STANDARD
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 100663296                                 {product} {ergonomic}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1579155456                                {product} {ergonomic}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 8388608                                   {product} {ergonomic}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1579155456                             {manageable} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {ergonomic}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags foldmultilines=false
+ #1: stderr all=off uptime,level,tags foldmultilines=false
+
+Environment Variables:
+PATH=C:\Python313\Scripts\;C:\Python313\;C:\Python39\Scripts\;C:\Python39\;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\ProgramData\chocolatey\bin;C:\Program Files\MongoDB\Server\5.0\bin;C:\Users\lahou\AppData\Roaming\nvm;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\PostgreSQL\17\bin;c:\Users\lahou\AppData\Local\Programs\cursor\resources\app\bin;c:\Users\lahou\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\lahou\AppData\Roaming\nvm;C:\nvm4w\nodejs;C:\Program Files\nodejs\;C:\Users\lahou\AppData\Local\Microsoft\WindowsApps;C:\Users\lahou\AppData\Roaming\nvm;C:\nvm4w\nodejs;C:\Users\lahou\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\lahou\AppData\Local\Programs\cursor\resources\app\bin;C:\Users\lahou\AppData\Roaming\npm;C:\Users\lahou\AppData\Local\Microsoft\WinGet\Packages\Schniz.fnm_Microsoft.Winget.Source_8wekyb3d8bbwe;;C:\Program Files\JetBrains\IntelliJ IDEA 2025.1.1.1\bin;
+USERNAME=lahou
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=AMD64 Family 23 Model 24 Stepping 1, AuthenticAMD
+TMP=C:\Users\lahou\AppData\Local\Temp
+TEMP=C:\Users\lahou\AppData\Local\Temp
+
+
+
+
+Periodic native trim disabled
+
+JNI global refs:
+JNI global refs: 0, weak refs: 0
+
+JNI global refs memory usage: 0, weak refs: 0
+
+Process memory usage:
+Resident Set Size: 12712K (0% of 6164744K total physical memory with 424176K free physical memory)
+
+OOME stack traces (most recent first):
+Classloader memory used:
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 11 , 64 bit Build 26100 (10.0.26100.3775)
+OS uptime: 0 days 2:04 hours
+Hyper-V role detected
+
+CPU: total 8 (initial active 8) (8 cores per cpu, 2 threads per core) family 23 model 24 stepping 1 microcode 0x8108109, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4a, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, clmul, bmi1, bmi2, adx, sha, fma, vzeroupper, clflush, clflushopt, hv, rdtscp, f16c
+Processor Information for the first 8 processors :
+  Max Mhz: 2100, Current Mhz: 2100, Mhz Limit: 2100
+
+Memory: 4k page, system-wide physical 6020M (414M free)
+TotalPageFile size 24452M (AvailPageFile size 5M)
+current process WorkingSet (physical memory assigned to process): 12M, peak: 12M
+current process commit charge ("private bytes"): 58M, peak: 59M
+
+vm_info: OpenJDK 64-Bit Server VM (21.0.6+9-b895.109) for windows-amd64 JRE (21.0.6+9-b895.109), built on 2025-03-26 by "builduser" with MS VC++ 16.10 / 16.11 (VS2019)
+
+END.
