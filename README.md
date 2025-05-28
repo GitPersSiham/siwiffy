@@ -30,10 +30,6 @@
 
 ---
 
-## 📦 Installation
 
-### 1. Clone le projet
 
-```bash
-git clone https://github.com/ton-org/cleanbooking.git
-cd cleanbooking
+
