@@ -24,7 +24,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   logout: () => set({ isAuthenticated: false, user: null }),
 }));
 */
-import { create } from 'zustand';
+import { create } from 'zustand'
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -34,7 +34,7 @@ interface AuthState {
   checkAuthFromStorage: () => void;
 }
 
-export const useAuthStore = create<AuthState>((set) => ({
+export const useAuthStore = create<AuthState>((set:any) => ({
   isAuthenticated: false,
   userId: null,
   setIsAuthenticated: (auth: boolean) => {

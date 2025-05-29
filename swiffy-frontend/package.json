@@ -24,7 +24,9 @@
     "react-router-dom": "^7.5.3",
     "react-toastify": "^11.0.5",
     "vite": "^6.3.5",
-    "zustand": "^5.0.4"
+    "zustand": "^5.0.5",
+       "axios": "^1.6.0",
+    "luxon": "^3.4.0"
   },
   "devDependencies": {
     "@babel/core": "^7.27.1",
@@ -35,8 +37,8 @@
     "@babel/preset-typescript": "^7.27.1",
     "@eslint/js": "^9.22.0",
     "@types/node": "^20",
-    "@types/react": "^19.1.2",
-    "@types/react-dom": "^19.0.4",
+    "@types/react": "^19.1.6",
+    "@types/react-dom": "^19.1.5",
     "@vitejs/plugin-react": "^4.3.4",
     "autoprefixer": "^10.4.21",
     "daisyui": "^4.12.24",
@@ -47,6 +49,7 @@
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
     "typescript": "^5",
-    "typescript-eslint": "^8.26.1"
+    "typescript-eslint": "^8.26.1",
+      "@types/luxon": "^3.4.0"
   }
 }
