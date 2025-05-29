@@ -1,14 +1,9 @@
-import express from 'express';
+import { Router } from 'express';
+import { authController } from '../controllers/AuthController';
 
-import { body } from 'express-validator';
-import { loginController } from '../controllers/AuthController';
+const router = Router();
 
-const router = express.Router();
-
-router.post(
-  '/login',
-  [body('email').isEmail().normalizeEmail(), body('password').notEmpty()],
-  loginController
-);
+router.post('/login', authController.login as any);
+router.post('/register', authController.register as any);
 
 export default router;

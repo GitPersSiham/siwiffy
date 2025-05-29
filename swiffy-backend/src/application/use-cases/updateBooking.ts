@@ -1,22 +1,21 @@
-import { Booking, BookingStatus } from "../../domain/entities/Booking";
-import { IBookingRepository } from "../../interface/repositories/IBookinRepository";
+import { IBookingRepository } from '../../interface/repositories/IBookinRepository';
+import { Booking } from '../../domain/entities/Booking';
 
 export class UpdateBooking {
   constructor(private bookingRepository: IBookingRepository) {}
 
-  async execute(input: { id: string; status: BookingStatus }): Promise<void> {
-    const booking = await this.bookingRepository.findByIdUser(input.id);
-
+  async execute(id: string, updateData: Partial<Booking>): Promise<Booking | null> {
+    const booking = await this.bookingRepository.findById(id);
     if (!booking) {
-      throw new Error("Booking not found");
+      throw new Error('Booking not found');
     }
 
-    if (booking.status === "cancelled") {
-      throw new Error("Booking already cancelled");
-    }
+    const updatedBooking = new Booking({
+      ...booking,
+      ...updateData
+    });
 
-    booking.status = 'cancelled';
-    await this.bookingRepository.update(booking);
+    return this.bookingRepository.update(updatedBooking);
   }
 }
 

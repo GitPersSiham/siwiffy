@@ -1,15 +1,13 @@
 // src/interface/http/routes/userRoutes.ts
 import { Router } from "express";
-import { createUserController, findAllUsersController } from "../controllers/CreateUserController";
+import { createUserController } from "../controllers/CreateUserController";
 import { cancelUserController } from "../controllers/CancelUserController";
-import { UpdateUserController } from "../controllers/UpdateUserController";
+import { updateUserController } from "../controllers/UpdateUserController";
 
 const router = Router();
 
-router.post("/users", createUserController);
-router.get("/users", findAllUsersController);
-router.delete("/users/:id", cancelUserController);
-router.put("/users/:id", UpdateUserController);
-
+router.post("/users", createUserController.execute as any);
+router.delete("/users/:id", cancelUserController.execute as any);
+router.put("/users/:id", updateUserController.execute as any);
 
 export default router;

@@ -18,13 +18,16 @@ router.get('/', findBookingController.findAll as RequestHandler);
 router.get('/user/:userId', findBookingController.findByUserId as RequestHandler);
 
 // Route pour récupérer une réservation spécifique
-router.get('/:id', findBookingController.findById as RequestHandler);
+router.get('/:id', findBookingController.execute as RequestHandler);
 
 // Route pour mettre à jour une réservation
-router.put('/:id', updateBookingController as RequestHandler);
+router.put('/:id', updateBookingController.execute as RequestHandler);
+
+// Route pour supprimer une réservation
+router.delete('/:id', deleteBookingController.execute as RequestHandler);
 
 // Route pour annuler une réservation
-router.delete('/:id', deleteBookingController.execute as RequestHandler);
+router.post('/:id/cancel', cancelBookingController.execute as RequestHandler);
 
 // Route pour récupérer les créneaux occupés
 router.get('/slots/occupied', findOccupiedSlotController.execute as RequestHandler);

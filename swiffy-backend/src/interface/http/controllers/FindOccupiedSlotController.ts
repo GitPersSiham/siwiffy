@@ -1,8 +1,8 @@
 import { Request, Response } from 'express';
-import { BookingRepositoryMongo } from '../../../infrastracture/db/repositories/BookingRepositoryMongo';
+import { BookingRepositorySupabase } from '../../../infrastracture/db/repositories/BookingRepositorySupabase';
 import { Booking } from '../../../domain/entities/Booking';
 
-const bookingRepository = new BookingRepositoryMongo();
+const bookingRepository = new BookingRepositorySupabase();
 
 class FindOccupiedSlotController {
   private readonly OPENING_HOUR = 8;
@@ -33,95 +33,82 @@ class FindOccupiedSlotController {
   async execute(req: Request, res: Response) {
     try {
       const { date } = req.query;
+      
       if (!date) {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'Le paramètre date est requis' 
-        });
+        return res.status(400).json({ error: 'Date is required' });
       }
 
-      // Créer la date en UTC
-      const targetDate = new Date(date as string);
-      if (isNaN(targetDate.getTime())) {
-        return res.status(400).json({ 
-          success: false, 
-          message: 'Format de date invalide' 
-        });
-      }
+      const searchDate = new Date(date as string);
+      console.log('Finding occupied slots for date:', {
+        inputDate: date,
+        parsedDate: searchDate.toISOString(),
+        localDate: searchDate.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+      });
 
-      // Ajuster la date pour le fuseau horaire de Paris
-      targetDate.setHours(targetDate.getHours() + 2); // Ajustement pour Paris (UTC+2)
-
-      // Récupérer les réservations existantes
-      const bookings = await bookingRepository.findByDate(targetDate);
+      // Récupérer toutes les réservations pour la date
+      const bookings = await bookingRepository.findByDate(searchDate);
+      console.log('Found bookings:', bookings.map(booking => ({
+        id: booking.id,
+        userId: booking.userId,
+        dateStart: booking.dateStart.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+        dateEnd: booking.dateEnd.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+        status: booking.status
+      })));
       
-      // Générer tous les créneaux possibles
-      const allSlots = this.generateTimeSlots(targetDate);
-      
-      // Convertir les réservations confirmées en créneaux occupés
+      // Filtrer les réservations confirmées ou en attente
       const occupiedSlots = bookings
-        .filter(booking => booking.status === 'confirmed' || booking.status === 'pending')
-        .map(booking => {
-          // S'assurer que les dates sont en UTC
-          const start = new Date(booking.dateStart);
-          const end = new Date(booking.dateEnd);
-          
-          console.log('Processing booking:', {
+        .filter((booking: Booking) => {
+          const isValid = booking.status === 'confirmed' || booking.status === 'pending';
+          console.log('Booking status check:', {
             id: booking.id,
             status: booking.status,
-            originalStart: booking.dateStart,
-            originalEnd: booking.dateEnd,
-            convertedStart: start.toISOString(),
-            convertedEnd: end.toISOString(),
-            localStart: start.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
-            localEnd: end.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+            isValid
           });
-
+          return isValid;
+        })
+        .map((booking: Booking) => {
+          console.log('Processing booking:', {
+            id: booking.id,
+            start: booking.dateStart.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+            end: booking.dateEnd.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+            status: booking.status
+          });
           return {
-            start,
-            end
+            start: booking.dateStart,
+            end: booking.dateEnd,
+            status: booking.status
           };
         });
 
-      // Formater la réponse avec les créneaux occupés
-      const formattedSlots = occupiedSlots.map(slot => {
-        const localStart = new Date(slot.start);
-        const localEnd = new Date(slot.end);
+      console.log('Occupied slots:', occupiedSlots.map(slot => ({
+        start: slot.start.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+        end: slot.end.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+        status: slot.status
+      })));
 
-        return {
+      const formattedSlots = occupiedSlots.map((slot: { start: Date; end: Date; status: string }) => {
+        const formattedSlot = {
           start: slot.start.toISOString(),
           end: slot.end.toISOString(),
-          time: localStart.toLocaleTimeString('fr-FR', { 
-            hour: '2-digit', 
-            minute: '2-digit',
-            timeZone: 'Europe/Paris'
-          })
+          status: slot.status
         };
+        console.log('Formatted slot:', {
+          ...formattedSlot,
+          localStart: slot.start.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+          localEnd: slot.end.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+        });
+        return formattedSlot;
       });
 
-      console.log('Sending response:', {
-        date: targetDate.toLocaleDateString('fr-FR'),
-        occupiedSlots: formattedSlots.map(slot => ({
-          start: slot.start,
-          end: slot.end,
-          time: slot.time,
-          localStart: new Date(slot.start).toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
-          localEnd: new Date(slot.end).toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
-        }))
-      });
+      console.log('Sending response with slots:', formattedSlots);
 
-      res.status(200).json({ 
-        success: true, 
-        date: targetDate.toLocaleDateString('fr-FR'),
-        occupiedSlots: formattedSlots,
-        totalOccupied: formattedSlots.length
+      res.status(200).json({
+        date: date,
+        occupiedSlots: formattedSlots
       });
     } catch (error: any) {
-      console.error('Error in findOccupiedSlotController:', error);
-      res.status(500).json({ 
-        success: false, 
-        message: 'Erreur lors de la recherche des créneaux disponibles' 
-      });
+      console.error('Error in FindOccupiedSlotController:', error);
+      res.status(400).json({ error: error.message });
     }
   }
 }

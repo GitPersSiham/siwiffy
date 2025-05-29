@@ -7,6 +7,7 @@ import {
 } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import { LoginResponse } from '@/api/userApi';
 
 import Navbar from './components/Navbar';
 import PrivateRoute from './components/PrivateRoute';
@@ -26,8 +27,11 @@ const App: React.FC = () => {
     checkAuthFromStorage();
   }, [checkAuthFromStorage]);
 
-  const handleLoginSuccess = () => {
+  const handleLoginSuccess = (data: LoginResponse) => {
     setIsAuthenticated(true);
+    if (data.user?.id) {
+      useAuthStore.getState().setUserId(data.user.id);
+    }
   };
 
   const handleLogout = () => {

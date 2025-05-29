@@ -2,7 +2,6 @@ import React, { useState} from 'react';
 import { format, isSameDay } from 'date-fns';
 import { fr } from 'date-fns/locale';
 import { useBookingsByUserId } from '@/hooks/useBookingByUserId';
-
 import { getOccupiedSlots } from '@/api/bookingApi';
 import { toast } from 'react-hot-toast';
 import { DateTime } from 'luxon';
@@ -147,7 +146,7 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
   };
 
   // Gérer la sélection d'une heure
-  /*const handleTimeSelect = (localHour: number) => {
+  const handleTimeSelect = (localHour: number) => {
     if (!selectedDate || isSlotOccupied(localHour) || !isValidTimeSlot(localHour)) {
       if (!selectedDate) {
         toast.error('Veuillez sélectionner une date');
@@ -157,39 +156,34 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
         toast.error('Veuillez sélectionner une heure entre 8h et 17h');
       }
       return;
-    }*/
-      const handleTimeSelect = (localHour: number) => {
-        if (!selectedDate || isSlotOccupied(localHour) || !isValidTimeSlot(localHour)) {
-          if (!selectedDate) {
-            toast.error('Veuillez sélectionner une date');
-          } else if (isSlotOccupied(localHour)) {
-            toast.error('Ce créneau est déjà réservé');
-          } else if (!isValidTimeSlot(localHour)) {
-            toast.error('Veuillez sélectionner une heure entre 8h et 17h');
-          }
-          return;
-        }
-      
+    }
 
     // Créer la date en heure locale (Paris)
-
     const parisStart = DateTime.fromJSDate(selectedDate)
-    .setZone('Europe/Paris')
-    .set({ hour: localHour, minute: 0, second: 0, millisecond: 0 });
+      .setZone('Europe/Paris')
+      .set({ hour: localHour, minute: 0, second: 0, millisecond: 0 });
     const parisEnd = parisStart.plus({ hours: formData.duration });
+    
+    // Convertir en UTC pour le stockage
     const startDateUTC = parisStart.toUTC().toJSDate();
-  const endDateUTC = parisEnd.toUTC().toJSDate();
+    const endDateUTC = parisEnd.toUTC().toJSDate();
 
-  console.log('Début (Paris):', parisStart.toString());
-  console.log('Début (UTC):', startDateUTC.toISOString());
-
-    // Log détaillé des dates
-  /*  console.log('Dates sélectionnées:', {
-      dateDébut: startDate.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
-      dateFin: endDate.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+    console.log('Dates sélectionnées:', {
+      paris: {
+        start: parisStart.toFormat('yyyy-MM-dd HH:mm:ss'),
+        end: parisEnd.toFormat('yyyy-MM-dd HH:mm:ss'),
+        startHour: parisStart.hour,
+        endHour: parisEnd.hour
+      },
+      utc: {
+        start: startDateUTC.toISOString(),
+        end: endDateUTC.toISOString(),
+        startHour: DateTime.fromJSDate(startDateUTC).hour,
+        endHour: DateTime.fromJSDate(endDateUTC).hour
+      }
     });
-*/
-    // Stocker les dates en heure locale
+
+    // Stocker les dates en UTC
     setFormData(prev => ({
       ...prev,
       date: startDateUTC,
@@ -219,23 +213,29 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
     return true;
   };
 
-
   const isSlotOccupied = (localHour: number) => {
-    if (!selectedDate) return false;
-  
     return occupiedSlots.some(slot => {
-      const slotStartHour = DateTime.fromJSDate(slot.start).setZone('Europe/Paris').hour;
-      const slotEndHour = DateTime.fromJSDate(slot.end).setZone('Europe/Paris').hour;
-      console.log(`Vérification de ${localHour}h : slot ${slotStartHour}h → ${slotEndHour}h`);
-      const isOccupied = (
-        (localHour >= slotStartHour && localHour < slotEndHour) ||
-        (localHour + formData.duration > slotStartHour && localHour + formData.duration <= slotEndHour) ||
-        (localHour <= slotStartHour && localHour + formData.duration >= slotEndHour)
-      );
-  
+      const slotStart = DateTime.fromJSDate(slot.start).setZone('Europe/Paris');
+      const slotEnd = DateTime.fromJSDate(slot.end).setZone('Europe/Paris');
+      const slotStartHour = slotStart.hour;
+      const slotEndHour = slotEnd.hour;
+
+      // Convertir l'heure locale en UTC pour la comparaison
+      const localDateTime = DateTime.fromJSDate(selectedDate!)
+        .setZone('Europe/Paris')
+        .set({ hour: localHour, minute: 0, second: 0, millisecond: 0 });
+      const localHourUTC = localDateTime.toUTC().hour;
+
+      const isOccupied = localHour >= slotStartHour && localHour < slotEndHour;
+
+      if (isOccupied) {
+        console.log(`Créneau ${localHour}h (${localHourUTC}h UTC) est occupé par le slot ${slotStartHour}h → ${slotEndHour}h`);
+      }
+
       return isOccupied;
     });
   };
+
   // Gérer la sélection d'une date
   const handleDateSelect = (date: Date) => {
     setSelectedDate(date);

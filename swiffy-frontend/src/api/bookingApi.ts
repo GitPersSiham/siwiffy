@@ -74,24 +74,36 @@ export const getOccupiedSlots = async (date: string): Promise<TimeSlot[]> => {
     console.log('Fetching occupied slots:', {
       originalDate: date,
       dateObj: dateObj.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
-      utcDate: formattedDate
+      utcDate: formattedDate,
+      url: `${API_URL}/slots/occupied?date=${formattedDate}`
     });
 
     const response = await axios.get(`${API_URL}/slots/occupied`, {
       params: { date: formattedDate }
     });
 
-    console.log('Raw API response:', response.data);
+    console.log('Raw API response:', {
+      status: response.status,
+      data: response.data,
+      headers: response.headers
+    });
 
     // Vérifier si la réponse a le format attendu
-    if (!response.data || !response.data.success || !Array.isArray(response.data.occupiedSlots)) {
-      console.error('Invalid response format:', response.data);
+    if (!response.data) {
+      console.error('No data in response');
+      return [];
+    }
+
+    if (!Array.isArray(response.data.occupiedSlots)) {
+      console.error('occupiedSlots is not an array:', response.data);
       return [];
     }
 
     // Transformer les données reçues en TimeSlot[]
     const slots = response.data.occupiedSlots
       .map((slot: any) => {
+        console.log('Processing slot:', slot);
+        
         if (!slot.start || !slot.end) {
           console.warn('Invalid slot format:', slot);
           return null;
@@ -100,6 +112,15 @@ export const getOccupiedSlots = async (date: string): Promise<TimeSlot[]> => {
         try {
           const startDate = new Date(slot.start);
           const endDate = new Date(slot.end);
+
+          console.log('Converted dates:', {
+            originalStart: slot.start,
+            originalEnd: slot.end,
+            convertedStart: startDate.toISOString(),
+            convertedEnd: endDate.toISOString(),
+            localStart: startDate.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+            localEnd: endDate.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+          });
 
           if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
             console.warn('Invalid date conversion:', {
@@ -122,7 +143,11 @@ export const getOccupiedSlots = async (date: string): Promise<TimeSlot[]> => {
       })
       .filter((slot:any): slot is TimeSlot => slot !== null);
 
-    console.log('Transformed slots:', slots);
+    console.log('Final transformed slots:', slots.map((slot: { start: { toLocaleString: (arg0: string, arg1: { timeZone: string; }) => any; }; end: { toLocaleString: (arg0: string, arg1: { timeZone: string; }) => any; }; }) => ({
+      start: slot.start.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
+      end: slot.end.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
+    })));
+    
     return slots;
   } catch (error) {
     console.error('Error fetching occupied slots:', error);

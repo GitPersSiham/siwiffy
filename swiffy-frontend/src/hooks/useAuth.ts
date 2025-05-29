@@ -1,4 +1,3 @@
-
 import { useMutation } from '@tanstack/react-query';
 import { loginUser, LoginCredentials, LoginResponse } from '@/api/userApi';
 import { parseJwt } from '@/utlis/auth';
@@ -17,13 +16,13 @@ export const useLoginUser = (
         const userInfo = parseJwt(token);
         console.log('User info from token:', userInfo);
 
-        if (userInfo && userInfo.userId) {
+        if (userInfo && userInfo.id) {
           localStorage.setItem('token', token);
-          localStorage.setItem('userId', userInfo.userId);
+          localStorage.setItem('userId', userInfo.id);
           localStorage.setItem('userEmail', userInfo.email);
-          console.log('Stored userId:', userInfo.userId);
+          console.log('Stored userId:', userInfo.id);
         } else {
-          console.error('No userId found in token');
+          console.error('No user id found in token');
         }
       }
 

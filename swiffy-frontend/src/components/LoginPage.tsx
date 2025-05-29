@@ -4,7 +4,7 @@ import { useLoginUser } from '@/hooks/useAuth';
 import { LoginResponse } from '@/api/userApi';
 
 interface LoginPageProps {
-    onLoginSuccess: () => void;
+    onLoginSuccess: (data: LoginResponse) => void;
   }
   const LoginPage: React.FC<LoginPageProps> = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState('');
@@ -19,7 +19,7 @@ interface LoginPageProps {
       if (data?.token) {
         localStorage.setItem('token', data.token);
         localStorage.setItem('isAuthenticated', 'true');
-        onLoginSuccess();
+        onLoginSuccess(data);
         const from = (location.state as any)?.from?.pathname || '/nouvelle-reservation';
         navigate(from);
         setLoginError(null);

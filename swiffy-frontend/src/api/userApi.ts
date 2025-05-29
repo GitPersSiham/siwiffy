@@ -8,20 +8,20 @@ export type PartialUser = Partial<User> & { id: string };
 
 // bookingApi.ts
 export const createUsers = async (user: Omit<PartialUser, 'id'>) => {
-  const res = await axios.post(API_URL, user);
+  const res = await axios.post(`${API_URL}/users`, user);
   return res.data;
 };
 export const getUserById = async (id: string) => {
-    const res = await axios.get(`${API_URL}/${id}`);
+    const res = await axios.get(`${API_URL}/users/${id}`);
     return res.data;
   };
   export const updateUser = async (user: PartialUser) => {
-    const res = await axios.put(`${API_URL}/${user.id}`, user);
+    const res = await axios.put(`${API_URL}/users/${user.id}`, user);
     return res.data;
   };
   
   export const deleteUser = async (id: string) => {
-    const res = await axios.delete(`${API_URL}/${id}`);
+    const res = await axios.delete(`${API_URL}/users/${id}`);
     return res.data;
   };
   export interface LoginCredentials {
@@ -32,6 +32,11 @@ export const getUserById = async (id: string) => {
   export interface LoginResponse {
     token: string;
     message?: string;
+    user: {
+      id: string;
+      name: string;
+      email: string;
+    };
   }
   
   export const loginUser = async (credentials: LoginCredentials): Promise<LoginResponse> => {
