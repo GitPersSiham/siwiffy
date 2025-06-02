@@ -180,79 +180,139 @@ const BookingList: React.FC = () => {
           Créer une nouvelle réservation
         </button>
       </div>
-      <div className="overflow-x-auto shadow-md rounded-lg">
-        <table className="min-w-full divide-y divide-gray-200 bg-white">
-          <thead className="bg-gray-50">
-            <tr>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Forfait
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date de début
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Date de fin
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Type
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Adresse
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Montant
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Options
-              </th>
-              <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                Statut
-              </th>
-              <th scope="col" className="relative px-6 py-3">
-                <span className="sr-only">Actions</span>
-              </th>
-            </tr>
-          </thead>
-          <tbody className="bg-white divide-y divide-gray-200">
-            {bookings.map((booking) => (
-              <tr key={booking.id} className="hover:bg-gray-50">
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  {booking.packageType}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  {new Date(booking.dateStart).toLocaleString('fr-FR', {
-                    timeZone: 'Europe/Paris',
-                    dateStyle: 'short',
-                    timeStyle: 'short'
-                  })}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  {new Date(booking.dateEnd).toLocaleString('fr-FR', {
-                    timeZone: 'Europe/Paris',
-                    dateStyle: 'short',
-                    timeStyle: 'short'
-                  })}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
-                  {booking.propertyType}
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-800 max-w-xs truncate">
-                  {booking.adress}
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-700">
-                  {booking.amount} €
-                </td>
-                <td className="px-6 py-4 text-sm text-gray-800">
-                  <ul className="list-disc list-inside space-y-1">
-                    {booking.options?.windows && <li>Nettoyage des fenêtres (+10 €)</li>}
-                    {booking.options?.fridge && <li>Réfrigérateur (+10 €)</li>}
-                    {booking.options?.ironing && <li>Repassage (+15 €)</li>}
-                    {!booking.options?.windows && !booking.options?.fridge && !booking.options?.ironing && 
-                      <li>Aucune option sélectionnée</li>}
-                  </ul>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-sm">
-                  <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+      {/* Remplacer le tableau par des divs pour un affichage mobile optimisé */}
+      <div className="shadow-md rounded-lg overflow-hidden md:overflow-x-auto">
+        <div className="hidden md:block">
+          {/* Ancien tableau pour les grands écrans (peut être adapté ou retiré) */}
+          <table className="min-w-full divide-y divide-gray-200 bg-white">
+            <thead className="bg-gray-50">
+              <tr>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Forfait
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date de début
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Date de fin
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Type
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Adresse
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Montant
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Options
+                </th>
+                <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                  Statut
+                </th>
+                <th scope="col" className="relative px-6 py-3">
+                  <span className="sr-only">Actions</span>
+                </th>
+              </tr>
+            </thead>
+            <tbody className="bg-white divide-y divide-gray-200">
+              {bookings.map((booking) => (
+                <tr key={booking.id} className="hover:bg-gray-50">
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    {booking.packageType}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    {new Date(booking.dateStart).toLocaleString('fr-FR', {
+                      timeZone: 'Europe/Paris',
+                      dateStyle: 'short',
+                      timeStyle: 'short'
+                    })}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    {new Date(booking.dateEnd).toLocaleString('fr-FR', {
+                      timeZone: 'Europe/Paris',
+                      dateStyle: 'short',
+                      timeStyle: 'short'
+                    })}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-800">
+                    {booking.propertyType}
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-800 max-w-xs truncate">
+                    {booking.adress}
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm font-semibold text-gray-700">
+                    {booking.amount} €
+                  </td>
+                  <td className="px-6 py-4 text-sm text-gray-800">
+                    <ul className="list-disc list-inside space-y-1">
+                      {booking.options?.windows && <li>Nettoyage des fenêtres (+10 €)</li>}
+                      {booking.options?.fridge && <li>Réfrigérateur (+10 €)</li>}
+                      {booking.options?.ironing && <li>Repassage (+15 €)</li>}
+                      {!booking.options?.windows && !booking.options?.fridge && !booking.options?.ironing && 
+                        <li>Aucune option sélectionnée</li>}
+                    </ul>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-sm">
+                    <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                      booking.status === 'confirmed' 
+                        ? 'bg-green-100 text-green-800'
+                        : booking.status === 'cancelled'
+                        ? 'bg-red-100 text-red-800'
+                        : 'bg-yellow-100 text-yellow-800'
+                    }`}>
+                      {booking.status === 'confirmed' 
+                        ? 'Confirmée'
+                        : booking.status === 'cancelled'
+                        ? 'Annulée'
+                        : 'En attente'}
+                    </span>
+                  </td>
+                  <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
+                    {booking.status === 'pending' && (
+                      <button
+                        onClick={() => handlePayment(booking)}
+                        className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors duration-200"
+                      >
+                        Payer
+                      </button>
+                    )}
+                    {booking.status !== 'confirmed' && (
+                      <>
+                        <button
+                          onClick={() => handleDeleteClick(booking)}
+                          className="border border-red-300 text-red-600 px-3 py-1 rounded hover:bg-red-50 transition-colors duration-200"
+                        >
+                          Supprimer
+                        </button>
+                        <button
+                          onClick={() => navigate(`/modifier-reservation/${booking.id}`)}
+                          className="bg-teal-700 text-white px-3 py-1 rounded hover:bg-teal-800 transition-colors duration-200"
+                        >
+                          Modifier
+                        </button>
+                      </>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+
+        {/* Nouvelle structure pour les mobiles */}
+        <div className="block md:hidden divide-y divide-gray-200 bg-white rounded-lg shadow-md">
+          {bookings.map((booking) => (
+            <div key={booking.id} className="p-4 space-y-3">
+              {/* Ligne 1: Forfait, Type, et Statut */}
+              <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start">
+                <div className="flex items-center">
+                   <span className="font-bold text-lg text-teal-700 mr-2">{booking.packageType}</span>
+                   <span className="text-sm text-gray-800">({booking.propertyType})</span>
+                </div>
+                <div className="text-sm mt-2 sm:mt-0">
+                   <span className={`px-2 py-1 rounded-full text-xs font-medium ${
                     booking.status === 'confirmed' 
                       ? 'bg-green-100 text-green-800'
                       : booking.status === 'cancelled'
@@ -265,12 +325,57 @@ const BookingList: React.FC = () => {
                       ? 'Annulée'
                       : 'En attente'}
                   </span>
-                </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium space-x-2">
-                  {booking.status === 'pending' && (
+                </div>
+              </div>
+
+              {/* Ligne 2: Dates */}
+              <div>
+                 <div className="text-sm text-gray-600">
+                   <span className="font-semibold">Début:</span> {new Date(booking.dateStart).toLocaleString('fr-FR', {
+                     dateStyle: 'short',
+                     timeStyle: 'short',
+                     timeZone: 'Europe/Paris'
+                   })}
+                 </div>
+                  <div className="text-sm text-gray-600 mt-1">
+                   <span className="font-semibold">Fin:</span> {new Date(booking.dateEnd).toLocaleString('fr-FR', {
+                     dateStyle: 'short',
+                     timeStyle: 'short',
+                     timeZone: 'Europe/Paris'
+                   })}
+                 </div>
+              </div>
+
+              {/* Ligne 3: Adresse et Montant */}
+              <div className="flex flex-col sm:flex-row sm:justify-between">
+                <div className="text-sm text-gray-800 truncate sm:max-w-xs">
+                  <span className="font-semibold">Adresse:</span> {booking.adress}
+                </div>
+                <div className="text-sm font-semibold text-gray-700 mt-2 sm:mt-0">
+                  <span className="font-semibold">Montant:</span> {booking.amount} €
+                </div>
+              </div>
+
+              {/* Ligne 4: Options */}
+              {(booking.options && Object.values(booking.options).some(option => option === true)) ? (
+                <div className="text-sm text-gray-800">
+                  <span className="font-semibold">Options:</span>
+                  <ul className="list-disc list-inside space-y-1 ml-4">
+                    {booking.options?.windows && <li>Nettoyage des fenêtres (+10 €)</li>}
+                    {booking.options?.fridge && <li>Réfrigérateur (+10 €)</li>}
+                    {booking.options?.ironing && <li>Repassage (+15 €)</li>}
+                  </ul>
+                </div>
+              ) : (
+                 <div className="text-sm text-gray-800"><span className="font-semibold">Options:</span> Aucune option sélectionnée</div>
+              )}
+
+              {/* Ligne 5: Actions */}
+              <div className="flex justify-end space-x-2 pt-3 border-t border-gray-100">
+                 {booking.status === 'pending' && (
                     <button
                       onClick={() => handlePayment(booking)}
-                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors duration-200"
+                      className="bg-green-600 text-white px-3 py-1 rounded hover:bg-green-700 transition-colors duration-200 text-sm"
                     >
                       Payer
                     </button>
@@ -279,23 +384,22 @@ const BookingList: React.FC = () => {
                     <>
                       <button
                         onClick={() => handleDeleteClick(booking)}
-                        className="border border-red-300 text-red-600 px-3 py-1 rounded hover:bg-red-50 transition-colors duration-200"
+                        className="border border-red-300 text-red-600 px-3 py-1 rounded hover:bg-red-50 transition-colors duration-200 text-sm"
                       >
                         Supprimer
                       </button>
                       <button
                         onClick={() => navigate(`/modifier-reservation/${booking.id}`)}
-                        className="bg-teal-700 text-white px-3 py-1 rounded hover:bg-teal-800 transition-colors duration-200"
+                        className="bg-teal-700 text-white px-3 py-1 rounded hover:bg-teal-800 transition-colors duration-200 text-sm"
                       >
                         Modifier
                       </button>
                     </>
                   )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
       {/* Modale de confirmation de suppression */}

@@ -376,7 +376,7 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
                       }
                     }}
                     disabled={isOccupied || !isValid}
-                    className={`p-3 text-center rounded-lg transition-all duration-200 ${
+                    className={`p-3 text-center rounded-lg transition-all duration-200 flex items-center justify-center ${
                       isSelected
                         ? 'bg-teal-700 text-white shadow-lg transform scale-105'
                         : isOccupied
@@ -384,13 +384,13 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
                         : 'bg-white border border-gray-200 hover:bg-gray-50 hover:border-teal-500'
                     }`}
                   >
-                    <div className="text-lg font-medium">{localHour}h00</div>
-                    {isOccupied && (
+                    <div className="text-base md:text-lg font-medium">{localHour}h00</div>
+                    {/* {isOccupied && (
                       <div className="text-xs text-gray-500 mt-1">Réservé</div>
-                    )}
-                    {!isOccupied && isValid && (
+                    )} */}
+                    {/* {!isOccupied && isValid && (
                       <div className="text-xs text-teal-600 mt-1">Disponible</div>
-                    )}
+                    )} */}
                   </button>
                 );
               })}
