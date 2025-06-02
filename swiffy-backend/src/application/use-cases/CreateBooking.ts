@@ -64,7 +64,7 @@ export class CreateBooking {
       dateEnd: endDateUTC,
       createdAt: new Date(),
       status: 'pending',
-      id: '', // L'ID sera généré par MongoDB
+      id: '', // L'ID sera généré par Supabase
     };
 
     const booking = new Booking(bookingProps);
