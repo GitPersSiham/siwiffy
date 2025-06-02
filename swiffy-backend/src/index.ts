@@ -14,12 +14,20 @@ import { SupabaseService } from './infrastracture/services/supabaseService';
 const app = express();
 
 // Configuration CORS
+const allowedOrigins = [
+  'https://siwiffy-app-new-ras6.vercel.app',
+];
+
+// Fonction dynamique pour autoriser toutes les previews
 app.use(cors({
-  origin: [
-    'https://siwiffy-app-new-ras6.vercel.app',
-    'http://localhost:5173' // Pour le développement local
-  ],
-  credentials: true
+  origin: function (origin, callback) {
+    if (!origin) return callback(null, true); // autorise les outils locaux
+    if (allowedOrigins.includes(origin) || origin.endsWith('.vercel.app')) {
+      return callback(null, true);
+    }
+    return callback(new Error('Not allowed by CORS'));
+  },
+  credentials: true,
 }));
 
 app.use(express.json());
