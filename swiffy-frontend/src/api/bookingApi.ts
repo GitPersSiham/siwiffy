@@ -1,4 +1,5 @@
 import axios from 'axios';
+import { DateTime } from 'luxon';
 
 import { PartialBooking } from '@/hooks/useUpdateBooking';
 import { Booking } from '@/types';
@@ -88,30 +89,23 @@ export const getOccupiedSlots = async (date: string): Promise<TimeSlot[]> => {
       headers: response.headers
     });
 
-    // Vérifier si la réponse a le format attendu
-    if (!response.data) {
-      console.error('No data in response');
-      return [];
-    }
-
-    if (!Array.isArray(response.data.occupiedSlots)) {
-      console.error('occupiedSlots is not an array:', response.data);
+    if (!response.data || !Array.isArray(response.data.occupiedSlots)) {
+      console.error('Invalid response format:', response.data);
       return [];
     }
 
     // Transformer les données reçues en TimeSlot[]
     const slots = response.data.occupiedSlots
       .map((slot: any) => {
-        console.log('Processing slot:', slot);
-        
         if (!slot.start || !slot.end) {
           console.warn('Invalid slot format:', slot);
           return null;
         }
 
         try {
-          const startDate = new Date(slot.start);
-          const endDate = new Date(slot.end);
+          // Convertir les dates en heure locale de Paris
+          const startDate = DateTime.fromISO(slot.start).setZone('Europe/Paris').toJSDate();
+          const endDate = DateTime.fromISO(slot.end).setZone('Europe/Paris').toJSDate();
 
           console.log('Converted dates:', {
             originalStart: slot.start,
@@ -141,9 +135,9 @@ export const getOccupiedSlots = async (date: string): Promise<TimeSlot[]> => {
           return null;
         }
       })
-      .filter((slot:any): slot is TimeSlot => slot !== null);
+      .filter((slot: TimeSlot | null): slot is TimeSlot => slot !== null);
 
-    console.log('Final transformed slots:', slots.map((slot: { start: { toLocaleString: (arg0: string, arg1: { timeZone: string; }) => any; }; end: { toLocaleString: (arg0: string, arg1: { timeZone: string; }) => any; }; }) => ({
+    console.log('Final transformed slots:', slots.map((slot: TimeSlot) => ({
       start: slot.start.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' }),
       end: slot.end.toLocaleString('fr-FR', { timeZone: 'Europe/Paris' })
     })));

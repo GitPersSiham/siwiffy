@@ -214,22 +214,24 @@ export const BookingCalendar: React.FC<BookingCalendarProps> = ({
   };
 
   const isSlotOccupied = (localHour: number) => {
+    if (!selectedDate) return false;
+
     return occupiedSlots.some(slot => {
+      // Convertir les dates en heure locale de Paris
       const slotStart = DateTime.fromJSDate(slot.start).setZone('Europe/Paris');
       const slotEnd = DateTime.fromJSDate(slot.end).setZone('Europe/Paris');
+      const selectedDateTime = DateTime.fromJSDate(selectedDate).setZone('Europe/Paris');
+
+      // Vérifier si le créneau sélectionné chevauche le créneau occupé
       const slotStartHour = slotStart.hour;
       const slotEndHour = slotEnd.hour;
+      const selectedDateHour = selectedDateTime.hour;
 
-      // Convertir l'heure locale en UTC pour la comparaison
-      const localDateTime = DateTime.fromJSDate(selectedDate!)
-        .setZone('Europe/Paris')
-        .set({ hour: localHour, minute: 0, second: 0, millisecond: 0 });
-      const localHourUTC = localDateTime.toUTC().hour;
-
+      // Un créneau est occupé si l'heure sélectionnée est dans le créneau occupé
       const isOccupied = localHour >= slotStartHour && localHour < slotEndHour;
 
       if (isOccupied) {
-        console.log(`Créneau ${localHour}h (${localHourUTC}h UTC) est occupé par le slot ${slotStartHour}h → ${slotEndHour}h`);
+        console.log(`Créneau ${localHour}h est occupé par le slot ${slotStartHour}h → ${slotEndHour}h`);
       }
 
       return isOccupied;
