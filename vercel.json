@@ -16,10 +16,5 @@
       "src": "/(.*)",
       "dest": "/swiffy-frontend/$1"
     }
-  ],
-  "env": {
-    "VITE_API_URL": "https://siwiffy-10.onrender.com",
-    "VITE_SUPABASE_URL": "https://votre-projet.supabase.co",
-    "VITE_SUPABASE_ANON_KEY": "votre-clé-anon-supabase"
-  }
+  ]
 } 
