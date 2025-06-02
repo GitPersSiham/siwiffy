@@ -17,6 +17,7 @@ const app = express();
 app.use(cors({
   origin: [
     'https://swiffy-r5ddrm79j-lahoualisiham91-gmailcoms-projects.vercel.app',
+    'https://siwiffy-new-pte2.vercel.app',
     'http://localhost:5173' // Pour le développement local
   ],
   credentials: true
