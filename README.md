@@ -9,7 +9,6 @@ Swiffy est une application web permettant aux particuliers de réserver des pres
 - Choix d’un **forfait** (Simple, Confort, Suprême, Mensuel)
 - Sélection du **type de logement** (Studio, T1, T2, T3, T4)
 - **Calendrier dynamique** avec gestion intelligente des créneaux (UTC / heure locale)
-- **Synchronisation Google Calendar**
 - Paiement sécurisé via **Stripe**
 - Gestion des **annulations jusqu'à 3h avant**
 - Envoi automatique d’**e-mails de confirmation**
@@ -47,55 +46,50 @@ npm install
 npm run dev
 
 
-🌐 Déploiement
-✅ Frontend : déployé sur Vercel
+✅ Déploiement
+🔹 Frontend (hébergé sur Vercel)
 Branche déployée : master
-
-Commandes Vercel :
 
 Build command : npm run build
 
 Output directory : dist
 
-✅ Backend : à héberger séparément (Render, Railway, Supabase Functions...)
+URL locale : http://localhost:5173
 
-🔐 Variables d'environnement
+🔹 Backend (hébergé séparément : Render, Railway, etc.)
+Port par défaut : 5000
 
-🔹 .env du frontend
+URL locale : http://localhost:5000
 
-VITE_STRIPE_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
+⚠️ Doit autoriser les CORS depuis le frontend via CLIENT_URL
 
-VITE_API_URL=http://localhost:5000
+🔐 Variables d’environnement.
 
-VITE_SUPABASE_URL=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+🔹 .env – Frontend 
 
-VITE_SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxx
+- VITE_API_URL=http://localhost:5000
+- VITE_STRIPE_PUBLIC_KEY=pk_test_xxxxxxxxxxxxxxxxxxxxxxxxx
+- VITE_SUPABASE_URL=https://xxxxxxxxxxxxxxxx.supabase.co
+- VITE_SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
+ 
+🔹 .env – Backend 
 
-🔹 .env du backend
+- PORT=5000
+- CLIENT_URL=http://localhost:5173
+- JWT_SECRET="une_chaine_ultra_secrète"
+- STRIPE_SECRET_KEY=sk_test_xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- SUPABASE_URL=https://xxxxxxxxxxxxxxxx.supabase.co
+- SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+- SUPABASE_SERVICE_ROLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.
 
-PORT=5000
+🧪 Améliorations prévues (Roadmap)
 
-JWT_SECRET="une_chaine_ultra_secret"
+🛠️ Interface admin : affichage, filtrage et modification des réservations
 
-STRIPE_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
+📩 Notifications SMS : rappel automatique des créneaux par SMS (ex. via Twilio)
 
-CLIENT_URL=http://localhost:5173
+📄 Facturation PDF : génération automatique d’une facture téléchargeable
 
-SUPABASE_URL=https://xxxxxxxxxxxxxx.supabase.co
+📱 Application mobile : version React Native pour Android & iOS
 
-SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-SUPABASE_SERVICE_ROLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-
-
-🧪 TODO (améliorations futures)
-
-Interface admin pour voir toutes les réservations
-
-Système de notifications SMS
-
-Facturation PDF automatique
-
-Application mobile (React Native ?)
-
-
+🔄 Synchronisation bidirectionnelle Google Calendar : modifications visibles en temps réel
