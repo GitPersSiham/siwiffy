@@ -62,17 +62,26 @@ Output directory : dist
 
 🔹 .env du frontend
 VITE_STRIPE_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 VITE_API_URL=http://localhost:5000
+
 VITE_SUPABASE_URL=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  
+
 VITE_SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxx
 
 🔹 .env du backend
 PORT=5000
+
 JWT_SECRET="une_chaine_ultra_secret"
+
 STRIPE_SECRET_KEY=xxxxxxxxxxxxxxxxxxxxx
+
 CLIENT_URL=http://localhost:5173
+
 SUPABASE_URL=https://xxxxxxxxxxxxxx.supabase.co
+
 SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
 SUPABASE_SERVICE_ROLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
