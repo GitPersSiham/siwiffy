@@ -58,9 +58,11 @@ Build command : npm run build
 Output directory : dist
 
 ✅ Backend : à héberger séparément (Render, Railway, Supabase Functions...)
+
 🔐 Variables d'environnement
 
 🔹 .env du frontend
+
 VITE_STRIPE_PUBLIC_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 VITE_API_URL=http://localhost:5000
@@ -70,6 +72,7 @@ VITE_SUPABASE_URL=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 VITE_SUPABASE_ANON_KEY=xxxxxxxxxxxxxxxxxxxxxxxxx
 
 🔹 .env du backend
+
 PORT=5000
 
 JWT_SECRET="une_chaine_ultra_secret"
@@ -86,9 +89,13 @@ SUPABASE_SERVICE_ROLE_KEY=xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 
 
 🧪 TODO (améliorations futures)
+
 Interface admin pour voir toutes les réservations
+
 Système de notifications SMS
+
 Facturation PDF automatique
+
 Application mobile (React Native ?)
 
 
