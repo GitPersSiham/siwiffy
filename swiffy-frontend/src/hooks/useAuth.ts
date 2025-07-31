@@ -1,7 +1,7 @@
 import { useMutation } from '@tanstack/react-query';
 import { loginUser, LoginCredentials, LoginResponse } from '@/api/userApi';
 import { parseJwt } from '@/utlis/auth';
-// Corriger l'import (tu avais `utlis` au lieu de `utils`)
+
 
 export const useLoginUser = (
   onLoginSuccess?: (data: LoginResponse) => void,
